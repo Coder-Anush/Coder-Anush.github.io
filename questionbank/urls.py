@@ -1,13 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import RedirectView
-from papers.views import signup, CustomLoginView
-from django.contrib.auth.views import LogoutView  # ✅ Add this import
+from papers.views import signup, CustomLoginView, welcome  # ✅ Fix this: use 'welcome' instead of 'welcome_page'
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
+    path('', welcome, name='welcome'),  # ✅ Use your correct view function name
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='/view/')),  # 🔁 Redirect homepage to /view/
-    path('', include('papers.urls')),
+    path('papers/', include('papers.urls')),
 
     # Authentication
     path('signup/', signup, name='signup'),
